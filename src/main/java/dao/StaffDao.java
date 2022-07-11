@@ -60,8 +60,8 @@ public class StaffDao implements CRUD<Staff> {
 
     @Override
     public boolean edit(int id, Staff staff) {
-        String sql = "UPDATE nhanvien SET name = ?,birth = ?, " +
-                "address = ?,phone = ?,mail = ?, idPhong=? WHERE (id = ?)";
+        String sql = "UPDATE nhanvien SET name = ?,DateofBirth = ?, " +
+                "address = ?,numberphone = ?,Email = ?, idPhong=? WHERE (id = ?)";
         try (Connection connection = Connect_MySQL.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(7, staff.getId());
@@ -128,12 +128,12 @@ public class StaffDao implements CRUD<Staff> {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                Date date = resultSet.getDate("birth");
+                Date date = resultSet.getDate("DateofBirth");
                 LocalDate birth = ((java.sql.Date) date).toLocalDate();
                 String address = resultSet.getString("address");
-                String phoneNumber = resultSet.getString("phone");
-                String email = resultSet.getString("mail");
-                Department department = departmentDao.findById(resultSet.getInt("phongban"));
+                String phoneNumber = resultSet.getString("numberphone");
+                String email = resultSet.getString("Email");
+                Department department = departmentDao.findById(resultSet.getInt("idPhong"));
 
                 staffList.add(new Staff(id, name, birth, address,  phoneNumber,email, department));
             }
